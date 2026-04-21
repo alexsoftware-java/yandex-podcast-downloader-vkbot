@@ -44,3 +44,7 @@ Issues = "https://github.com/alexsoftware-java/yandex-podcast-downloader-vkbot/i
 
 [project.scripts]
 podcastr-bot = "src.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["src*"]

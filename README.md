@@ -13,6 +13,12 @@ VK bot for listening to Yandex Music podcasts via VKontakte messenger.
 - ⏭⏮ **Navigate** between episodes
 - 💾 **Save files** locally to `downloads/` folder
 - ⌨️ **Convenient buttons** for control
+- 🗄 **SQLite storage** — user state persists across restarts
+- 💿 **Audio caching** — episodes downloaded once, reused for all users
+- 📊 **Usage statistics** — track user actions and popular content
+- 🔄 **Retry logic** — automatic retries for failed API requests
+- 📝 **Rotating logs** — detailed logging with file rotation (10 MB)
+- ⚡ **Graceful shutdown** — clean resource cleanup on stop
 
 ## 📋 Requirements
 

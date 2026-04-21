@@ -1,92 +1,76 @@
-from vkbottle.tools import Keyboard, Text, ButtonColor
+import json
 
 
 def create_podcast_keyboard(has_next: bool = True, has_prev: bool = False) -> dict:
-    """Клавиатура управления плеером с навигацией. Возвращает dict для VK API."""
-    keyboard = {
-        "one_time": False,
-        "inline": False,
-        "buttons": []
-    }
-    
-    buttons_row = []
-    
+    """Клавиатура управления плеером с навигацией."""
+    buttons = []
+
     # Кнопки навигации по эпизодам
-    if has_prev:
-        buttons_row.append({
-            "action": {"type": "text", "label": "⏮ Назад", "payload": "{\"cmd\": \"prev\"}"},
-            "color": "secondary"
-        })
-    if has_next:
-        buttons_row.append({
-            "action": {"type": "text", "label": "⏭ Вперёд", "payload": "{\"cmd\": \"next\"}"},
-            "color": "secondary"
-        })
-    
-    if buttons_row:
-        keyboard["buttons"].append(buttons_row)
-    
+    if has_prev or has_next:
+        nav_buttons = []
+        if has_prev:
+            nav_buttons.append({
+                "action": {"type": "text", "label": "⏮ Назад", "payload": json.dumps({"cmd": "prev"})}
+            })
+        if has_next:
+            nav_buttons.append({
+                "action": {"type": "text", "label": "⏭ Вперёд", "payload": json.dumps({"cmd": "next"})}
+            })
+        buttons.append(nav_buttons)
+
     # Кнопки управления
-    keyboard["buttons"].append([
+    buttons.append([
         {
-            "action": {"type": "text", "label": "▶️ Play", "payload": "{\"cmd\": \"play\"}"},
-            "color": "positive"
+            "action": {"type": "text", "label": "▶️ Play", "payload": json.dumps({"cmd": "play"})}
         },
         {
-            "action": {"type": "text", "label": "📋 Список эпизодов", "payload": "{\"cmd\": \"episodes\"}"},
-            "color": "primary"
+            "action": {"type": "text", "label": "📋 Список эпизодов", "payload": json.dumps({"cmd": "episodes"})}
         }
     ])
-    
+
     # Кнопка возврата к поиску
-    keyboard["buttons"].append([
+    buttons.append([
         {
-            "action": {"type": "text", "label": "🔍 Новый поиск", "payload": "{\"cmd\": \"search\"}"},
-            "color": "secondary"
+            "action": {"type": "text", "label": "🔍 Новый поиск", "payload": json.dumps({"cmd": "search"})}
         }
     ])
-    
-    return keyboard
+
+    return {"one_time": False, "inline": True, "buttons": buttons}
 
 
 def create_episodes_keyboard(current_page: int = 0, total_pages: int = 1) -> dict:
     """Клавиатура со списком эпизодов (номера 1-5)."""
-    keyboard = {
-        "one_time": False,
-        "inline": False,
-        "buttons": []
-    }
-    
-    # Кнопки с номерами эпизодов
+    buttons = []
+
+    # Кнопки с номерами эпизодов (всегда 5 кнопок)
     numbers_row = []
     for i in range(1, 6):
         numbers_row.append({
-            "action": {"type": "text", "label": str(i), "payload": f'{{"cmd": "episode_{i}"}}'},
-            "color": "primary"
+            "action": {"type": "text", "label": str(i), "payload": json.dumps({"cmd": f"episode_{i}"})}
         })
-    keyboard["buttons"].append(numbers_row)
-    
+    buttons.append(numbers_row)
+
     # Навигация по страницам
-    if total_pages > 1:
-        nav_row = []
-        if current_page > 0:
-            nav_row.append({
-                "action": {"type": "text", "label": "⬅️ Пред.", "payload": "{\"cmd\": \"prev_page\"}"},
-                "color": "secondary"
-            })
-        if current_page < total_pages - 1:
-            nav_row.append({
-                "action": {"type": "text", "label": "След. ➡️", "payload": "{\"cmd\": \"next_page\"}"},
-                "color": "secondary"
-            })
-        if nav_row:
-            keyboard["buttons"].append(nav_row)
+    has_prev = current_page > 0
+    has_next = current_page < total_pages - 1
     
-    keyboard["buttons"].append([
+    if total_pages > 1 and (has_prev or has_next):
+        nav_row = []
+        if has_prev:
+            nav_row.append({
+                "action": {"type": "text", "label": "⬅️ Пред.", "payload": json.dumps({"cmd": "prev_page"})}
+            })
+        if has_next:
+            nav_row.append({
+                "action": {"type": "text", "label": "След. ➡️", "payload": json.dumps({"cmd": "next_page"})}
+            })
+        buttons.append(nav_row)
+
+    # Кнопка возврата
+    buttons.append([
         {
-            "action": {"type": "text", "label": "↩️ Назад к подкасту", "payload": "{\"cmd\": \"back\"}"},
-            "color": "secondary"
+            "action": {"type": "text", "label": "↩️ Назад к подкасту", "payload": json.dumps({"cmd": "back"})}
         }
     ])
-    
-    return keyboard
+
+    return {"one_time": False, "inline": True, "buttons": buttons}

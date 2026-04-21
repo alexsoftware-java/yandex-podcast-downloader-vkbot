@@ -1,0 +1,9 @@
+Requirement already satisfied: aiosqlite in c:\users\алексей хлызов\appdata\local\programs\python\python313\lib\site-packages (0.22.1)
+Collecting tenacity
+  Downloading tenacity-9.1.4-py3-none-any.whl.metadata (1.2 kB)
+Downloading tenacity-9.1.4-py3-none-any.whl (28 kB)
+Installing collected packages: tenacity
+Successfully installed tenacity-9.1.4
+
+[notice] A new release of pip is available: 25.2 -> 26.0.1
+[notice] To update, run: python.exe -m pip install --upgrade pip

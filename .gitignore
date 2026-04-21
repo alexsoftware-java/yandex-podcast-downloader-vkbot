@@ -33,6 +33,11 @@ env/
 downloads/
 *.mp3
 
+# Data and logs
+data/
+*.db
+*.log
+
 # Logs
 *.log
 
