@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "yandex-podcast-downloader-vkbot"
+version = "1.0.0"
+description = "VK bot for listening to Yandex Music podcasts"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.11"
+authors = [
+    {name = "Alexey Khlyzov", email = "alex.khlizov@yandex.ru"}
+]
+keywords = ["vk", "bot", "yandex-music", "podcast", "vkbottle"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Sound/Audio",
+]
+dependencies = [
+    "yandex-music>=3.0.0",
+    "vkbottle>=4.3.0",
+    "pydantic-settings>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "requests>=2.31.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.3.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/alexsoftware-java/yandex-podcast-downloader-vkbot"
+Repository = "https://github.com/alexsoftware-java/yandex-podcast-downloader-vkbot.git"
+Issues = "https://github.com/alexsoftware-java/yandex-podcast-downloader-vkbot/issues"
+
+[project.scripts]
+podcastr-bot = "src.main:main"

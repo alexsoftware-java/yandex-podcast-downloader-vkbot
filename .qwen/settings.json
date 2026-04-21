@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(dev.max.ru)"
+    ]
+  },
+  "$version": 3
+}
